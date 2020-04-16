@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-disk
+  namespace: nginx-ns
+  # labels:
+  #   type: local
+spec:
+  storageClassName: local-disk
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  hostPath:
+    path: "/mnt/d/tests"
+    type: DirectoryOrCreate
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: local-pv
+#   namespace: nginx-ns
+# spec:
+#   capacity:
+#     storage: 1Gi
+#   volumeMode: Filesystem
+#   accessModes:
+#   - ReadWriteOnce
+#   persistentVolumeReclaimPolicy: Retain
+#   storageClassName: local-disk
+#   local:
+#     path: /tmp/data/disk
+#   nodeAffinity:
+#     required:
+#       nodeSelectorTerms:
+#         - matchExpressions:
+#           - key: node.kubernetes.io/disk
+#             operator: In
+#             values: ['pv-disk']

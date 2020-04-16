@@ -1,0 +1,24 @@
+# apiVersion: networking.k8s.io/v1beta1
+# kind: Ingress
+# metadata:
+#   name: test-ingress
+#   namespace: nginx-ns
+# spec:
+#   backend:
+#     serviceName: nginx-ns
+#     servicePort: 80
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: cafe-ingress
+  namespace: nginx-ns
+spec:
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nginx-ns
+          servicePort: 80
