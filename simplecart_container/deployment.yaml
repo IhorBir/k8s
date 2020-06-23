@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache
+  labels:
+    app: apache
+  namespace: cart-cont
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: apache
+  template:
+    metadata:
+      labels:
+        app: apache
+    spec:
+      containers:
+      - name: apache
+        image: nginx
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 3
+      - name: grafana
+        image: grafana/grafana
+        env:
+        - name: "GF_SERVER_SERVE_FROM_SUB_PATH"
+          value: "true"
+        - name: "GF_SERVER_ROOT_URL"
+          value: "%(protocol)s://%(domain)s/grafana"
+        ports:
+        - containerPort: 3000

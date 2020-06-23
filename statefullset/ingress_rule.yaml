@@ -13,12 +13,19 @@ kind: Ingress
 metadata:
   name: cafe-ingress
   namespace: nginx-ns
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: "/"
+    kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
   - host: localhost
     http:
       paths:
-      - path: /
+      - path: /nginx
         backend:
           serviceName: nginx-ns
           servicePort: 80
+      # - path: /apache
+      #   backend:
+      #     serviceName: apache
+      #     servicePort: 80

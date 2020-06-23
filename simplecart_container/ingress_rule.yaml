@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: apache-ingress
+  namespace: cart-cont
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - path: /apache
+        backend:
+          serviceName: apache
+          servicePort: 80
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: grafana
+  namespace: cart-cont
+  annotations:
+spec:
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - path: /grafana
+        backend:
+          serviceName: grafana
+          servicePort: 3000
